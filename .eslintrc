@@ -1,0 +1,16 @@
+{
+  "env": {
+    "node": true,
+    "mocha": true,
+    "es6": true
+  },
+  "globals": {
+    "expect": true
+  },
+  "rules": {
+    "security/detect-object-injection": 0
+  },
+  "extends": [
+    "emarsys"
+  ]
+}
