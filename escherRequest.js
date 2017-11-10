@@ -77,9 +77,7 @@ class EscherRequest {
   }
 
   _signRequest(options, payload) {
-    const headerNames = options.headers.map(function(header) {
-      return header[0];
-    });
+    const headerNames = options.headers.map(header => header[0]);
 
     return this._escher.signRequest(options, payload, headerNames);
   }

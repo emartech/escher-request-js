@@ -14,7 +14,7 @@ describe('EscherRequest', function() {
     credentialScope: 'eu/dummy/ems_request'
   };
 
-  const createDummyResponse = function() {
+  const createDummyResponse = () => {
     return {
       headers: {},
       body: 'response body dummy'
@@ -23,14 +23,14 @@ describe('EscherRequest', function() {
 
   let escherRequestOptions;
 
-  beforeEach(function() {
+  beforeEach(() => {
     escherRequestOptions = new EscherRequest.Options(serviceConfig.host, serviceConfig);
   });
 
   it('should sign headers of GET request', function() {
     const escherRequest = EscherRequest.create('key', 'secret', escherRequestOptions);
 
-    this.sandbox.stub(request, 'get').callsFake(function(options, callback) {
+    this.sandbox.stub(request, 'get').callsFake((options, callback) => {
       expect(options.headers['x-ems-auth']).to.have.string('SignedHeaders=content-type;host;x-ems-date,');
       callback(null, createDummyResponse());
     });
@@ -41,7 +41,7 @@ describe('EscherRequest', function() {
   it('should sign headers of POST request', function() {
     const escherRequest = EscherRequest.create('key', 'secret', escherRequestOptions);
 
-    this.sandbox.stub(request, 'post').callsFake(function(options, callback) {
+    this.sandbox.stub(request, 'post').callsFake((options, callback) => {
       expect(options.headers['x-ems-auth']).to.have.string('SignedHeaders=content-type;host;x-ems-date,');
       callback(null, createDummyResponse());
     });
@@ -52,7 +52,7 @@ describe('EscherRequest', function() {
   it('should sign headers of DELETE request', function() {
     const escherRequest = EscherRequest.create('key', 'secret', escherRequestOptions);
 
-    this.sandbox.stub(request, 'delete').callsFake(function(options, callback) {
+    this.sandbox.stub(request, 'delete').callsFake((options, callback) => {
       expect(options.headers['x-ems-auth']).to.have.string('SignedHeaders=content-type;host;x-ems-date,');
       callback(null, createDummyResponse());
     });
@@ -64,7 +64,7 @@ describe('EscherRequest', function() {
     const escherRequest = EscherRequest.create('key', 'secret', escherRequestOptions);
     escherRequestOptions.setHeader(['x-customer-id', 15]);
 
-    this.sandbox.stub(request, 'post').callsFake(function(options, callback) {
+    this.sandbox.stub(request, 'post').callsFake((options, callback) => {
       expect(options.headers['x-ems-auth']).to.have.string('content-type;host;x-customer-id;x-ems-date,');
       callback(null, createDummyResponse());
     });
@@ -74,7 +74,7 @@ describe('EscherRequest', function() {
 
   it('should encode payload when content type is json', function() {
     const escherRequest = EscherRequest.create('key', 'secret', escherRequestOptions);
-    this.sandbox.stub(request, 'post').callsFake(function(options, callback) {
+    this.sandbox.stub(request, 'post').callsFake((options, callback) => {
       try {
         expect(options.body).to.eql('{"name":"Almanach"}');
         callback(null, createDummyResponse());
@@ -90,7 +90,7 @@ describe('EscherRequest', function() {
     const escherRequest = EscherRequest.create('key', 'secret', escherRequestOptions);
     escherRequestOptions.setHeader(['content-type', 'application/json;charset=utf-8']);
 
-    this.sandbox.stub(request, 'post').callsFake(function(options, callback) {
+    this.sandbox.stub(request, 'post').callsFake((options, callback) => {
       try {
         expect(options.body).to.eql('{"name":"Almanach"}');
         callback(null, createDummyResponse());
@@ -106,7 +106,7 @@ describe('EscherRequest', function() {
     const escherRequest = EscherRequest.create('key', 'secret', escherRequestOptions);
     escherRequestOptions.setHeader(['content-type', 'text/csv']);
 
-    this.sandbox.stub(request, 'post').callsFake(function(options, callback) {
+    this.sandbox.stub(request, 'post').callsFake((options, callback) => {
       try {
         expect(options.body).to.eql('header1;header2');
         callback(null, createDummyResponse());
@@ -122,7 +122,7 @@ describe('EscherRequest', function() {
     escherRequestOptions.setHeader(['extra-header', 'header-value']);
     const escherRequest = EscherRequest.create('key', 'secret', escherRequestOptions);
 
-    this.sandbox.stub(request, 'get').callsFake(function(options, callback) {
+    this.sandbox.stub(request, 'get').callsFake((options, callback) => {
       expect(options.headers['x-ems-auth'])
         .to.have.string('SignedHeaders=content-type;extra-header;host;x-ems-date,');
       callback(null, createDummyResponse());
@@ -136,7 +136,7 @@ describe('EscherRequest', function() {
     const payload = { name: 'Test' };
     this.sandbox.spy(Escher.prototype, 'signRequest');
 
-    this.sandbox.stub(request, 'post').callsFake(function(options, callback) {
+    this.sandbox.stub(request, 'post').callsFake((options, callback) => {
       callback(null, createDummyResponse());
     });
 

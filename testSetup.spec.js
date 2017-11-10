@@ -10,14 +10,8 @@ before(function() {
 
   chai.use(sinonChai);
 
-  sinon.stub.returnsWithResolve = function(data) {
-    return this.returns(Promise.resolve(data));
-  };
-
-  sinon.stub.returnsWithReject = function(error) {
-    return this.returns(Promise.reject(error));
-  };
-
+  sinon.stub.returnsWithResolve = data => this.returns(Promise.resolve(data));
+  sinon.stub.returnsWithReject = error => this.returns(Promise.reject(error));
 });
 
 

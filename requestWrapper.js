@@ -18,18 +18,16 @@ class RequestWrapper {
   }
 
   send() {
-    return new Promise(function(resolve, reject) {
+    return new Promise((resolve, reject) => {
       this._sendRequest(resolve, reject);
-    }.bind(this));
+    });
   }
 
   _sendRequest(resolve, reject) {
     const headers = {};
     const timer = new Timer(false);
     timer.start();
-    this.requestOptions.headers.forEach(function(header) {
-      headers[header[0]] = header[1];
-    });
+    this.requestOptions.headers.forEach(header =>headers[header[0]] = header[1]);
 
     const method = this.requestOptions.method.toLowerCase();
 
@@ -49,7 +47,7 @@ class RequestWrapper {
       reqOptions.body = this.payload;
     }
 
-    request[method](reqOptions, function(err, response) {
+    request[method](reqOptions, (err, response) => {
       if (err) {
         logger.error('fatal_error', err.message, this._getLogParameters());
         return reject(new EscherRequestError(err.message, 500));
@@ -84,7 +82,7 @@ class RequestWrapper {
       logger.success('send', this._getLogParameters({ time: timer.time() }));
 
       return resolve(response);
-    }.bind(this));
+    });
 
   }
 
