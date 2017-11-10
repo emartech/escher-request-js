@@ -41,9 +41,7 @@ class EscherRequestOptions {
   }
 
   getHeader(name) {
-    let result = _.find(this.headers, function(header) {
-      return header[0].toLowerCase() === name.toLowerCase();
-    });
+    const result = _.find(this.headers, header => header[0].toLowerCase() === name.toLowerCase());
 
     return result ? result[1] : null;
   }
@@ -57,7 +55,7 @@ class EscherRequestOptions {
   }
 
   toHash() {
-    let hash = {
+    const hash = {
       port: this.port,
       host: this.host,
       headers: this.headers,
@@ -77,9 +75,7 @@ class EscherRequestOptions {
   }
 
   _headersExcept(headerKeyToSkip) {
-    return function(existingHeader) {
-      return existingHeader[0] !== headerKeyToSkip;
-    };
+    return existingHeader => existingHeader[0] !== headerKeyToSkip;
   }
 
   static createForInternalApi(environment, rejectUnauthorized) {
@@ -96,7 +92,7 @@ class EscherRequestOptions {
 
 }
 
-let createEscherRequestOptions = function(prefix, environment, rejectUnauthorized) {
+const createEscherRequestOptions = (prefix, environment, rejectUnauthorized) => {
   let options = {};
 
   if (typeof environment === 'object') {

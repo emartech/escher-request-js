@@ -17,7 +17,7 @@ class EscherRequest {
       authHeaderName: 'X-Ems-Auth',
       dateHeaderName: 'X-Ems-Date'
     };
-    let escherConfig = _.extend(_.cloneDeep(configDefaults), {
+    const escherConfig = _.extend(_.cloneDeep(configDefaults), {
       accessKeyId: key,
       apiSecret: secret,
       credentialScope: options.credentialScope || configDefaults.credentialScope
@@ -44,9 +44,9 @@ class EscherRequest {
   }
 
   _request(method, path, data) {
-    let options = this._getOptionsFor(method, path);
-    let payload = data ? this._getPayload(data) : '';
-    let signedOptions = this._signRequest(options, payload);
+    const options = this._getOptionsFor(method, path);
+    const payload = data ? this._getPayload(data) : '';
+    const signedOptions = this._signRequest(options, payload);
 
     logger.log('send', this._getLogParameters(options));
     return this._getRequestFor(signedOptions, payload).send();
@@ -61,13 +61,13 @@ class EscherRequest {
   }
 
   _getRequestFor(requestOptions, payload) {
-    let protocol = (this._options.secure) ? 'https:' : 'http:';
+    const protocol = (this._options.secure) ? 'https:' : 'http:';
     return new RequestWrapper(requestOptions, protocol, payload);
   }
 
   _getOptionsFor(type, path) {
-    let defaultOptions = _.cloneDeep(this._options.toHash());
-    let realPath = defaultOptions.prefix + path;
+    const defaultOptions = _.cloneDeep(this._options.toHash());
+    const realPath = defaultOptions.prefix + path;
 
     return _.merge(defaultOptions, {
       method: type,
@@ -77,9 +77,7 @@ class EscherRequest {
   }
 
   _signRequest(options, payload) {
-    let headerNames = options.headers.map(function(header) {
-      return header[0];
-    });
+    const headerNames = options.headers.map(header => header[0]);
 
     return this._escher.signRequest(options, payload, headerNames);
   }

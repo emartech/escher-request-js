@@ -3,21 +3,15 @@
 const sinon = require('sinon');
 
 before(function() {
-  var chai = require('chai');
-  var sinonChai = require('sinon-chai');
+  const chai = require('chai');
+  const sinonChai = require('sinon-chai');
 
   global.expect = chai.expect;
 
   chai.use(sinonChai);
 
-  sinon.stub.returnsWithResolve = function(data) {
-    return this.returns(Promise.resolve(data));
-  };
-
-  sinon.stub.returnsWithReject = function(error) {
-    return this.returns(Promise.reject(error));
-  };
-
+  sinon.stub.returnsWithResolve = data => this.returns(Promise.resolve(data));
+  sinon.stub.returnsWithReject = error => this.returns(Promise.reject(error));
 });
 
 
