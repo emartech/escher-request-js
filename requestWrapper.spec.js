@@ -54,7 +54,7 @@ describe('Wrapper', function() {
     });
 
     it('should send GET request and return its response', function *() {
-      let response = yield wrapper.send();
+      const response = yield wrapper.send();
       expect(response).to.be.eql(apiResponse);
       expect(requestGetStub).to.be.calledWith(expectedRequestOptions);
     });
@@ -86,7 +86,7 @@ describe('Wrapper', function() {
         apiResponse.body = '';
         apiResponse.statusCode = 204;
 
-        let response = yield wrapper.send();
+        const response = yield wrapper.send();
 
         expect(response.statusCode).to.eql(204);
       });

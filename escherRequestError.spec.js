@@ -4,13 +4,13 @@ const EscherRequestError = require('./escherRequestError');
 
 describe('EscherRequestError', function() {
   it('should extend base Error class', function() {
-    let error = new EscherRequestError();
+    const error = new EscherRequestError();
 
     expect(error).to.be.an.instanceOf(Error);
   });
 
   it('should store constructor parameters', function() {
-    let error = new EscherRequestError('Invalid request', 400, {
+    const error = new EscherRequestError('Invalid request', 400, {
       data: {
         replyText: 'Too long',
         detailedMessage: 'Line too long'
@@ -26,7 +26,7 @@ describe('EscherRequestError', function() {
   });
 
   it('should store response as is when no data attribute present', function() {
-    let error = new EscherRequestError('Invalid request', 400, {
+    const error = new EscherRequestError('Invalid request', 400, {
       replyText: 'Too long',
       detailedMessage: 'Line too long'
     });
@@ -40,7 +40,7 @@ describe('EscherRequestError', function() {
   });
 
   it('should always contain data on error', function() {
-    let error = new EscherRequestError('Unauthorized');
+    const error = new EscherRequestError('Unauthorized');
 
     expect(error.data).to.eql({ replyText: 'Unauthorized' });
   });

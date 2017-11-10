@@ -41,7 +41,7 @@ class EscherRequestOptions {
   }
 
   getHeader(name) {
-    let result = _.find(this.headers, function(header) {
+    const result = _.find(this.headers, function(header) {
       return header[0].toLowerCase() === name.toLowerCase();
     });
 
@@ -57,7 +57,7 @@ class EscherRequestOptions {
   }
 
   toHash() {
-    let hash = {
+    const hash = {
       port: this.port,
       host: this.host,
       headers: this.headers,
@@ -96,7 +96,7 @@ class EscherRequestOptions {
 
 }
 
-let createEscherRequestOptions = function(prefix, environment, rejectUnauthorized) {
+const createEscherRequestOptions = function(prefix, environment, rejectUnauthorized) {
   let options = {};
 
   if (typeof environment === 'object') {

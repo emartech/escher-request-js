@@ -12,10 +12,10 @@ const escherRequest = EscherRequest.create('escher.key', 'escher.secret', {
 });
 
 const heroId = 1;
-let response = await escherRequest.get(`/heroes/${heroId}`);
+const response = await escherRequest.get(`/heroes/${heroId}`);
 console.log(response);
 
-let response = await escherRequest.post('/heroes', {
+const response = await escherRequest.post('/heroes', {
   name: 'Captain America',
   sex: 'male'
 });

@@ -3,8 +3,8 @@
 const sinon = require('sinon');
 
 before(function() {
-  var chai = require('chai');
-  var sinonChai = require('sinon-chai');
+  const chai = require('chai');
+  const sinonChai = require('sinon-chai');
 
   global.expect = chai.expect;
 

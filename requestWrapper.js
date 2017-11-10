@@ -24,16 +24,16 @@ class RequestWrapper {
   }
 
   _sendRequest(resolve, reject) {
-    let headers = {};
-    let timer = new Timer(false);
+    const headers = {};
+    const timer = new Timer(false);
     timer.start();
     this.requestOptions.headers.forEach(function(header) {
       headers[header[0]] = header[1];
     });
 
-    let method = this.requestOptions.method.toLowerCase();
+    const method = this.requestOptions.method.toLowerCase();
 
-    let reqOptions = {
+    const reqOptions = {
       uri: {
         hostname: this.requestOptions.host,
         port: this.requestOptions.port,
@@ -94,7 +94,7 @@ class RequestWrapper {
   }
 
   _getLogParameters(extraParametersToLog) {
-    let requestParametersToLog = _.pick(this.requestOptions, ['method', 'host', 'url']);
+    const requestParametersToLog = _.pick(this.requestOptions, ['method', 'host', 'url']);
     return _.extend({}, requestParametersToLog, extraParametersToLog);
   }
 
