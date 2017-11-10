@@ -12,12 +12,12 @@ const escherRequest = EscherRequest.create('escher.key', 'escher.secret', {
 });
 
 const heroId = 1;
-const response = await escherRequest.get(`/heroes/${heroId}`);
-console.log(response);
+const responseFromGet = await escherRequest.get(`/heroes/${heroId}`);
+console.log(responseFromGet);
 
-const response = await escherRequest.post('/heroes', {
+const responseFromPost = await escherRequest.post('/heroes', {
   name: 'Captain America',
   sex: 'male'
 });
-console.log(response);
+console.log(responseFromPost);
 ```
