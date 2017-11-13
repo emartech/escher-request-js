@@ -9,7 +9,6 @@ describe('EscherRequest', function() {
     host: 'localhost',
     port: 1234,
     prefix: '/api',
-    rejectUnauthorized: false,
     secure: true,
     credentialScope: 'eu/dummy/ems_request'
   };

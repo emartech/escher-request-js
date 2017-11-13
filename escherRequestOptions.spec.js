@@ -12,7 +12,6 @@ describe('EscherRequestOptions', function() {
     dummyServiceOptions = {
       port: 1234,
       prefix: '/api',
-      rejectUnauthorized: false,
       secure: true,
       credentialScope: 'eu/dummy/ems_request'
     };
@@ -133,7 +132,6 @@ describe('EscherRequestOptions', function() {
         host: 'localhost',
         port: 1234,
         prefix: '/api',
-        rejectUnauthorized: false,
         timeout: 15000
       });
       expect(escherRequestOptions.toHash()).to.not.have.property('allowEmptyResponse');

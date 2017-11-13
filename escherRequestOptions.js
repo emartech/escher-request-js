@@ -7,7 +7,6 @@ class EscherRequestOptions {
     this.host = host;
     this.secure = options.secure !== false;
     this.port = options.port || 443;
-    this.rejectUnauthorized = options.rejectUnauthorized !== false;
     this.headers = [['content-type', 'application/json'], ['host', host]];
     this.prefix = '';
     this.timeout = 'timeout' in options ? options.timeout : 15000;
@@ -15,14 +14,13 @@ class EscherRequestOptions {
     _.extend(this, options);
   }
 
-  setToSecure(port = 443, rejectUnauthorized) {
+  setToSecure(port = 443) {
     this.port = port;
     this.secure = true;
-    this.rejectUnauthorized = rejectUnauthorized;
   }
 
-  setToUnsecure(port) {
-    this.port = port || 80;
+  setToUnsecure(port = 80) {
+    this.port = port;
     this.secure = false;
   }
 
@@ -70,10 +68,6 @@ class EscherRequestOptions {
       prefix: this.prefix,
       timeout: this.timeout
     };
-
-    if (!this.rejectUnauthorized) {
-      hash.rejectUnauthorized = false;
-    }
 
     if (this.allowEmptyResponse) {
       hash.allowEmptyResponse = true;
