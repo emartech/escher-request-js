@@ -40,6 +40,14 @@ class EscherRequestOptions {
     return this.port;
   }
 
+  setSecure(secure) {
+    this.secure = secure;
+  }
+
+  getSecure() {
+    return this.secure;
+  }
+
   setHeader(headerToSet) {
     this.headers = this.headers
       .filter(this._headersExcept(headerToSet[0]))
