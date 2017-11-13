@@ -1,18 +1,16 @@
 'use strict';
 
-const _ = require('lodash');
-
 class EscherRequestOptions {
   constructor(host, options = {}) {
-    options.host = host;
-    options.secure = options.secure !== false;
-    options.port = options.port || 443;
-    options.headers = [['content-type', 'application/json'], ['host', host]];
-    options.prefix = options.prefix || '';
-    options.timeout = 'timeout' in options ? options.timeout : 15000;
-    options.allowEmptyResponse = options.allowEmptyResponse || false;
-    options.credentialScope = options.credentialScope || false;
-    this._options = options;
+    this._options = Object.assign({
+      secure: true,
+      port: 443,
+      headers: [['content-type', 'application/json'], ['host', host]],
+      prefix: '',
+      timeout: 15000,
+      allowEmptyResponse: false,
+      credentialScope: false
+    }, options, { host });
   }
 
   setToSecure(port = 443) {
@@ -59,10 +57,12 @@ class EscherRequestOptions {
     return this._options.headers;
   }
 
-  getHeader(name) {
-    const result = _.find(this._options.headers, header => header[0].toLowerCase() === name.toLowerCase());
-
-    return result ? result[1] : null;
+  getHeader(nameToFind) {
+    const nameToFindLowercased = nameToFind.toLowerCase();
+    for (const [name, value] of this._options.headers) {
+      if (name.toLowerCase() === nameToFindLowercased) { return value; }
+    }
+    return null;
   }
 
   setTimeout(timeout) {
