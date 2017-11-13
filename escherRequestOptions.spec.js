@@ -180,6 +180,12 @@ describe('EscherRequestOptions', function() {
       expect(escherRequestOptions.getHeader('content-type')).to.eql('text/csv');
     });
 
+    it('#getHeader should responds with null if header is missing', function() {
+      const escherRequestOptions = new EscherRequestOptions(dummyServiceHost, dummyServiceOptions);
+
+      expect(escherRequestOptions.getHeader('unknown')).to.eq(null);
+    });
+
     it('#getHeaders should list all the headers', function() {
       const expectedHeaders = [
         ['content-type', 'application/json'],
@@ -229,6 +235,15 @@ describe('EscherRequestOptions', function() {
       expect(escherRequestOptions.getTimeout()).to.be.eql(60000);
     });
 
+  });
+
+  describe('credentialScope handling', function() {
+    it('#setCredentialScope should set credentialScope', function() {
+      const escherRequestOptions = new EscherRequestOptions(dummyServiceHost, dummyServiceOptions);
+      escherRequestOptions.setCredentialScope('eu/test/ems_request');
+
+      expect(escherRequestOptions.getCredentialScope()).to.be.eql('eu/test/ems_request');
+    });
   });
 
 });
