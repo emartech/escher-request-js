@@ -78,34 +78,10 @@ class EscherRequestOptions {
     return existingHeader => existingHeader[0] !== headerKeyToSkip;
   }
 
-  static createForInternalApi(environment, rejectUnauthorized) {
-    return createEscherRequestOptions('/api/v2/internal', environment, rejectUnauthorized);
-  }
-
-  static createForServiceApi(environment, rejectUnauthorized) {
-    return createEscherRequestOptions('/api/services', environment, rejectUnauthorized);
-  }
-
-  static create(environment, prefix, rejectUnauthorized) {
-    return createEscherRequestOptions(prefix, environment, rejectUnauthorized);
+  static create(environment, options) {
+    return new EscherRequestOptions(environment, options);
   }
 
 }
-
-const createEscherRequestOptions = (prefix, environment, rejectUnauthorized) => {
-  let options = {};
-
-  if (typeof environment === 'object') {
-    options = environment;
-    environment = options.environment;
-  } else {
-    options.rejectUnauthorized = rejectUnauthorized;
-  }
-
-  options.prefix = prefix;
-
-  return new EscherRequestOptions(environment, options);
-};
-
 
 module.exports = EscherRequestOptions;
