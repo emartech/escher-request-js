@@ -51,6 +51,17 @@ describe('EscherRequestOptions', function() {
 
   });
 
+  describe('#setHost()', function() {
+
+    it('sets the host', function() {
+      const escherRequestOptions = EscherRequestOptions.create(dummyServiceHost, dummyServiceOptions);
+      escherRequestOptions.setHost('example.com');
+
+      expect(escherRequestOptions.getHost()).to.eql('example.com');
+    });
+
+  });
+
   describe('header handling', function() {
 
     it('can accept additional headers', function() {
