@@ -74,6 +74,23 @@ describe('Wrapper', function() {
       }
     });
 
+    it('should throw error when response code is fatal error', function *() {
+      requestGetStub.restore();
+      requestGetStub = this.sandbox.stub(request, 'get').callsFake((options, callback) => {
+        callback({ message: 'Something went wrong' });
+      });
+
+      try {
+        yield wrapper.send();
+        throw new Error('Error should have been thrown');
+      } catch (err) {
+        expect(err).to.be.an.instanceof(EscherRequestError);
+        expect(err.message).to.eql('Something went wrong');
+        expect(err.code).to.eql(500);
+        expect(requestGetStub).to.be.calledWith(expectedRequestOptions);
+      }
+    });
+
     describe('when empty response is allowed', function() {
       beforeEach(function() {
         escherRequestOptions.allowEmptyResponse = true;
