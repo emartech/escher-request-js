@@ -48,6 +48,17 @@ describe('EscherRequest', function() {
     escherRequest.post('/path', { name: 'Almanach' });
   });
 
+  it('should sign headers of PUT request', function() {
+    const escherRequest = EscherRequest.create('key', 'secret', escherRequestOptions);
+
+    this.sandbox.stub(request, 'put').callsFake((options, callback) => {
+      expect(options.headers['x-ems-auth']).to.have.string('SignedHeaders=content-type;host;x-ems-date,');
+      callback(null, createDummyResponse());
+    });
+
+    escherRequest.put('/path', { name: 'Almanach' });
+  });
+
   it('should sign headers of DELETE request', function() {
     const escherRequest = EscherRequest.create('key', 'secret', escherRequestOptions);
 
