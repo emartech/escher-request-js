@@ -48,14 +48,6 @@ class EscherRequest {
     return this._getRequestFor(signedOptions, payload).send();
   }
 
-  setOptions(requestOptions) {
-    this._options = requestOptions;
-  }
-
-  getOptions() {
-    return this._options;
-  }
-
   _getRequestFor(requestOptions, payload) {
     const protocol = this._options.getSecure() ? 'https:' : 'http:';
     return new RequestWrapper(requestOptions, protocol, payload);
