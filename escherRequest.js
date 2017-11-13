@@ -10,20 +10,16 @@ const logger = require('logentries-logformat')('escherrequest');
 class EscherRequest {
 
   constructor(key, secret, options) {
-    const configDefaults = {
+    const escherOptions = {
+      accessKeyId: key,
+      apiSecret: secret,
+      credentialScope: options.getCredentialScope() || 'eu/suite/ems_request',
       algoPrefix: 'EMS',
       vendorKey: 'EMS',
-      credentialScope: 'eu/suite/ems_request',
       authHeaderName: 'X-Ems-Auth',
       dateHeaderName: 'X-Ems-Date'
     };
-    const escherConfig = _.extend(_.cloneDeep(configDefaults), {
-      accessKeyId: key,
-      apiSecret: secret,
-      credentialScope: options.getCredentialScope() || configDefaults.credentialScope
-    });
-
-    this._escher = new Escher(escherConfig);
+    this._escher = new Escher(escherOptions);
     this._options = options;
   }
 
