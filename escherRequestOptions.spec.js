@@ -29,7 +29,7 @@ describe('EscherRequestOptions', function() {
     it('creates an instance with proper configuration', function() {
       const escherRequestOptions = new EscherRequestOptions(dummyServiceHost, dummyServiceOptions);
 
-      expect(escherRequestOptions.getEnvironment()).to.eql(dummyServiceHost);
+      expect(escherRequestOptions.getHost()).to.eql(dummyServiceHost);
       expect(escherRequestOptions.getPort()).to.eql(dummyServiceOptions.port);
     });
 
@@ -46,7 +46,7 @@ describe('EscherRequestOptions', function() {
     it('creates an instance with proper configuration', function() {
       const escherRequestOptions = EscherRequestOptions.create(dummyServiceHost, dummyServiceOptions);
 
-      expect(escherRequestOptions.getEnvironment()).to.eql(dummyServiceHost);
+      expect(escherRequestOptions.getHost()).to.eql(dummyServiceHost);
       expect(escherRequestOptions.getPort()).to.eql(dummyServiceOptions.port);
     });
 

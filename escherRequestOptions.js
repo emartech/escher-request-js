@@ -3,12 +3,12 @@
 const _ = require('lodash');
 
 class EscherRequestOptions {
-  constructor(environment, options = {}) {
+  constructor(host, options = {}) {
+    this.host = host;
     this.secure = options.secure !== false;
     this.port = options.port || 443;
-    this.host = environment;
     this.rejectUnauthorized = options.rejectUnauthorized !== false;
-    this.headers = [['content-type', 'application/json'], ['host', environment]];
+    this.headers = [['content-type', 'application/json'], ['host', host]];
     this.prefix = '';
     this.timeout = 'timeout' in options ? options.timeout : 15000;
     this.allowEmptyResponse = false;
@@ -26,11 +26,11 @@ class EscherRequestOptions {
     this.secure = false;
   }
 
-  setEnvironment(environment) {
-    this.host = environment;
+  setHost(host) {
+    this.host = host;
   }
 
-  getEnvironment() {
+  getHost() {
     return this.host;
   }
 
@@ -86,8 +86,8 @@ class EscherRequestOptions {
     return existingHeader => existingHeader[0] !== headerKeyToSkip;
   }
 
-  static create(environment, options) {
-    return new EscherRequestOptions(environment, options);
+  static create(host, options) {
+    return new EscherRequestOptions(host, options);
   }
 
 }
