@@ -30,6 +30,7 @@ describe('EscherRequestOptions', function() {
 
       expect(escherRequestOptions.getHost()).to.eql(dummyServiceHost);
       expect(escherRequestOptions.toHash()).to.eql({
+        allowEmptyResponse: false,
         headers: [
           ['content-type', 'application/json'],
           ['host', 'localhost']
@@ -46,6 +47,7 @@ describe('EscherRequestOptions', function() {
 
       expect(escherRequestOptions.getHost()).to.eql(dummyServiceHost);
       expect(escherRequestOptions.toHash()).to.eql({
+        allowEmptyResponse: false,
         headers: [
           ['content-type', 'application/json'],
           ['host', 'localhost']
@@ -178,20 +180,30 @@ describe('EscherRequestOptions', function() {
       expect(escherRequestOptions.getHeader('content-type')).to.eql('text/csv');
     });
 
+    it('#getHeaders should list all the headers', function() {
+      const expectedHeaders = [
+        ['content-type', 'application/json'],
+        ['host', dummyServiceHost]
+      ];
+      const escherRequestOptions = new EscherRequestOptions(dummyServiceHost, dummyServiceOptions);
+
+      expect(escherRequestOptions.getHeaders()).to.eql(expectedHeaders);
+    });
+
   });
 
   describe('allowEmptyResponse', function() {
     it('should be set to false by default', function() {
       const escherRequestOptions = new EscherRequestOptions(dummyServiceHost, dummyServiceOptions);
 
-      expect(escherRequestOptions.allowEmptyResponse).to.eql(false);
+      expect(escherRequestOptions.getAllowEmptyResponse()).to.eql(false);
     });
 
     it('should be set to the value provided in config', function() {
       dummyServiceOptions.allowEmptyResponse = true;
       const escherRequestOptions = new EscherRequestOptions(dummyServiceHost, dummyServiceOptions);
 
-      expect(escherRequestOptions.allowEmptyResponse).to.eql(true);
+      expect(escherRequestOptions.getAllowEmptyResponse()).to.eql(true);
     });
   });
 
@@ -215,33 +227,6 @@ describe('EscherRequestOptions', function() {
       escherRequestOptions.setTimeout(60000);
 
       expect(escherRequestOptions.getTimeout()).to.be.eql(60000);
-    });
-
-  });
-
-  describe('toHash', function() {
-
-    it('should return the proper object', function() {
-      const escherRequestOptions = new EscherRequestOptions(dummyServiceHost, dummyServiceOptions);
-
-      expect(escherRequestOptions.toHash()).to.be.eql({
-        headers: [
-          ['content-type', 'application/json'],
-          ['host', 'localhost']
-        ],
-        host: 'localhost',
-        port: 1234,
-        prefix: '/api',
-        timeout: 60
-      });
-      expect(escherRequestOptions.toHash()).to.not.have.property('allowEmptyResponse');
-    });
-
-    it('should add allowEmptyResponse to hash if set to TRUE', function() {
-      dummyServiceOptions.allowEmptyResponse = true;
-      const escherRequestOptions = new EscherRequestOptions(dummyServiceHost, dummyServiceOptions);
-
-      expect(escherRequestOptions.toHash()).to.have.property('allowEmptyResponse', true);
     });
 
   });

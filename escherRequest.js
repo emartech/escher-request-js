@@ -20,7 +20,7 @@ class EscherRequest {
     const escherConfig = _.extend(_.cloneDeep(configDefaults), {
       accessKeyId: key,
       apiSecret: secret,
-      credentialScope: options.credentialScope || configDefaults.credentialScope
+      credentialScope: options.getCredentialScope() || configDefaults.credentialScope
     });
 
     this._escher = new Escher(escherConfig);
@@ -61,7 +61,7 @@ class EscherRequest {
   }
 
   _getRequestFor(requestOptions, payload) {
-    const protocol = (this._options.secure) ? 'https:' : 'http:';
+    const protocol = this._options.getSecure() ? 'https:' : 'http:';
     return new RequestWrapper(requestOptions, protocol, payload);
   }
 

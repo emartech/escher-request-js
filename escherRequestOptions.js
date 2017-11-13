@@ -4,84 +4,100 @@ const _ = require('lodash');
 
 class EscherRequestOptions {
   constructor(host, options = {}) {
-    this.host = host;
-    this.secure = options.secure !== false;
-    this.port = options.port || 443;
-    this.headers = [['content-type', 'application/json'], ['host', host]];
-    this.prefix = '';
-    this.timeout = 'timeout' in options ? options.timeout : 15000;
-    this.allowEmptyResponse = false;
-    _.extend(this, options);
+    options.host = host;
+    options.secure = options.secure !== false;
+    options.port = options.port || 443;
+    options.headers = [['content-type', 'application/json'], ['host', host]];
+    options.prefix = options.prefix || '';
+    options.timeout = 'timeout' in options ? options.timeout : 15000;
+    options.allowEmptyResponse = options.allowEmptyResponse || false;
+    options.credentialScope = options.credentialScope || false;
+    this._options = options;
   }
 
   setToSecure(port = 443) {
-    this.port = port;
-    this.secure = true;
+    this._options.port = port;
+    this._options.secure = true;
   }
 
   setToUnsecure(port = 80) {
-    this.port = port;
-    this.secure = false;
+    this._options.port = port;
+    this._options.secure = false;
   }
 
   setHost(host) {
-    this.host = host;
+    this._options.host = host;
   }
 
   getHost() {
-    return this.host;
+    return this._options.host;
   }
 
   setPort(port) {
-    this.port = port;
+    this._options.port = port;
   }
 
   getPort() {
-    return this.port;
+    return this._options.port;
   }
 
   setSecure(secure) {
-    this.secure = secure;
+    this._options.secure = secure;
   }
 
   getSecure() {
-    return this.secure;
+    return this._options.secure;
   }
 
   setHeader(headerToSet) {
-    this.headers = this.headers
+    this._options.headers = this._options.headers
       .filter(this._headersExcept(headerToSet[0]))
       .concat([headerToSet]);
   }
 
+  getHeaders() {
+    return this._options.headers;
+  }
+
   getHeader(name) {
-    const result = _.find(this.headers, header => header[0].toLowerCase() === name.toLowerCase());
+    const result = _.find(this._options.headers, header => header[0].toLowerCase() === name.toLowerCase());
 
     return result ? result[1] : null;
   }
 
   setTimeout(timeout) {
-    this.timeout = timeout;
+    this._options.timeout = timeout;
   }
 
   getTimeout() {
-    return this.timeout;
+    return this._options.timeout;
+  }
+
+  getPrefix() {
+    return this._options.prefix;
+  }
+
+  getAllowEmptyResponse() {
+    return this._options.allowEmptyResponse;
+  }
+
+  setCredentialScope(credentialScope) {
+    this._options.credentialScope = credentialScope;
+  }
+
+  getCredentialScope() {
+    return this._options.credentialScope;
   }
 
   toHash() {
-    const hash = {
-      port: this.port,
-      host: this.host,
-      headers: this.headers,
-      prefix: this.prefix,
-      timeout: this.timeout
+    return {
+      port: this.getPort(),
+      host: this.getHost(),
+      headers: this.getHeaders(),
+      prefix: this.getPrefix(),
+      timeout: this.getTimeout(),
+      allowEmptyResponse: this.getAllowEmptyResponse()
     };
-
-    if (this.allowEmptyResponse) {
-      hash.allowEmptyResponse = true;
-    }
-
-    return hash;
   }
 
   _headersExcept(headerKeyToSkip) {
