@@ -30,8 +30,16 @@ class EscherRequestOptions {
     this.host = environment;
   }
 
+  getEnvironment() {
+    return this.host;
+  }
+
   setPort(port) {
     this.port = port;
+  }
+
+  getPort() {
+    return this.port;
   }
 
   setHeader(headerToSet) {

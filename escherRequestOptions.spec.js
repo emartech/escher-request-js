@@ -4,11 +4,12 @@ const EscherRequestOptions = require('./escherRequestOptions');
 
 describe('EscherRequestOptions', function() {
 
-  let dummyServiceConfig;
+  let dummyServiceOptions;
+  let dummyServiceHost;
 
   beforeEach(function() {
-    dummyServiceConfig = {
-      host: 'localhost',
+    dummyServiceHost = 'localhost';
+    dummyServiceOptions = {
       port: 1234,
       prefix: '/api',
       rejectUnauthorized: false,
@@ -17,11 +18,45 @@ describe('EscherRequestOptions', function() {
     };
   });
 
+  describe('constructor()', function() {
+
+    it('creates an EscherRequestOptions instance', function() {
+      const escherRequestOptions = new EscherRequestOptions(dummyServiceHost, dummyServiceOptions);
+
+      expect(escherRequestOptions.constructor.name).to.eql('EscherRequestOptions');
+    });
+
+    it('creates an instance with proper configuration', function() {
+      const escherRequestOptions = new EscherRequestOptions(dummyServiceHost, dummyServiceOptions);
+
+      expect(escherRequestOptions.getEnvironment()).to.eql(dummyServiceHost);
+      expect(escherRequestOptions.getPort()).to.eql(dummyServiceOptions.port);
+    });
+
+  });
+
+  describe('.create()', function() {
+
+    it('creates an EscherRequestOptions instance', function() {
+      const escherRequestOptions = EscherRequestOptions.create(dummyServiceHost, dummyServiceOptions);
+
+      expect(escherRequestOptions.constructor.name).to.eql('EscherRequestOptions');
+    });
+
+    it('creates an instance with proper configuration', function() {
+      const escherRequestOptions = EscherRequestOptions.create(dummyServiceHost, dummyServiceOptions);
+
+      expect(escherRequestOptions.getEnvironment()).to.eql(dummyServiceHost);
+      expect(escherRequestOptions.getPort()).to.eql(dummyServiceOptions.port);
+    });
+
+  });
+
   describe('header handling', function() {
 
     it('can accept additional headers', function() {
       const dummyHeader = ['header-name', 'header-value'];
-      const escherRequestOptions = new EscherRequestOptions(dummyServiceConfig.host, dummyServiceConfig);
+      const escherRequestOptions = new EscherRequestOptions(dummyServiceHost, dummyServiceOptions);
 
       escherRequestOptions.setHeader(dummyHeader);
 
@@ -29,14 +64,14 @@ describe('EscherRequestOptions', function() {
     });
 
     it('should add default content type', function() {
-      const escherRequestOptions = new EscherRequestOptions(dummyServiceConfig.host, dummyServiceConfig);
+      const escherRequestOptions = new EscherRequestOptions(dummyServiceHost, dummyServiceOptions);
 
       expect(escherRequestOptions.getHeader('content-type')).to.eql('application/json');
     });
 
     it('should not duplicate headers with same name', function() {
       const expectedContentTypeHeader = ['content-type', 'text/csv'];
-      const escherRequestOptions = new EscherRequestOptions(dummyServiceConfig.host, dummyServiceConfig);
+      const escherRequestOptions = new EscherRequestOptions(dummyServiceHost, dummyServiceOptions);
 
       escherRequestOptions.setHeader(expectedContentTypeHeader);
 
@@ -47,14 +82,14 @@ describe('EscherRequestOptions', function() {
 
   describe('allowEmptyResponse', function() {
     it('should be set to false by default', function() {
-      const escherRequestOptions = new EscherRequestOptions(dummyServiceConfig.host, dummyServiceConfig);
+      const escherRequestOptions = new EscherRequestOptions(dummyServiceHost, dummyServiceOptions);
 
       expect(escherRequestOptions.allowEmptyResponse).to.eql(false);
     });
 
     it('should be set to the value provided in config', function() {
-      dummyServiceConfig.allowEmptyResponse = true;
-      const escherRequestOptions = new EscherRequestOptions(dummyServiceConfig.host, dummyServiceConfig);
+      dummyServiceOptions.allowEmptyResponse = true;
+      const escherRequestOptions = new EscherRequestOptions(dummyServiceHost, dummyServiceOptions);
 
       expect(escherRequestOptions.allowEmptyResponse).to.eql(true);
     });
@@ -62,21 +97,21 @@ describe('EscherRequestOptions', function() {
 
   describe('timeout', function() {
     it('should return a default value', function() {
-      const escherRequestOptions = new EscherRequestOptions(dummyServiceConfig.host, dummyServiceConfig);
+      const escherRequestOptions = new EscherRequestOptions(dummyServiceHost, dummyServiceOptions);
 
       expect(escherRequestOptions.getTimeout()).to.be.eql(15000);
     });
 
     it('should return the timeout passed in the constructor', function() {
-      const options = Object.assign({}, dummyServiceConfig);
+      const options = Object.assign({}, dummyServiceOptions);
       options.timeout = 0;
-      const escherRequestOptions = new EscherRequestOptions(dummyServiceConfig.host, options);
+      const escherRequestOptions = new EscherRequestOptions(dummyServiceHost, options);
 
       expect(escherRequestOptions.getTimeout()).to.be.eql(0);
     });
 
     it('should return the timeout set by setTimeout', function() {
-      const escherRequestOptions = new EscherRequestOptions(dummyServiceConfig.host, dummyServiceConfig);
+      const escherRequestOptions = new EscherRequestOptions(dummyServiceHost, dummyServiceOptions);
 
       escherRequestOptions.setTimeout(60000);
 
@@ -88,7 +123,7 @@ describe('EscherRequestOptions', function() {
   describe('toHash', function() {
 
     it('should return the proper object', function() {
-      const escherRequestOptions = new EscherRequestOptions(dummyServiceConfig.host, dummyServiceConfig);
+      const escherRequestOptions = new EscherRequestOptions(dummyServiceHost, dummyServiceOptions);
 
       expect(escherRequestOptions.toHash()).to.be.eql({
         headers: [
@@ -105,8 +140,8 @@ describe('EscherRequestOptions', function() {
     });
 
     it('should add allowEmptyResponse to hash if set to TRUE', function() {
-      dummyServiceConfig.allowEmptyResponse = true;
-      const escherRequestOptions = new EscherRequestOptions(dummyServiceConfig.host, dummyServiceConfig);
+      dummyServiceOptions.allowEmptyResponse = true;
+      const escherRequestOptions = new EscherRequestOptions(dummyServiceHost, dummyServiceOptions);
 
       expect(escherRequestOptions.toHash()).to.have.property('allowEmptyResponse', true);
     });
