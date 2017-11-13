@@ -22,13 +22,13 @@ describe('EscherRequestOptions', function() {
     it('creates an EscherRequestOptions instance', function() {
       const escherRequestOptions = new EscherRequestOptions(dummyServiceHost);
 
-      expect(escherRequestOptions.constructor.name).to.eql('EscherRequestOptions');
+      expect(escherRequestOptions.constructor.name).to.eq('EscherRequestOptions');
     });
 
     it('creates an instance with default options', function() {
       const escherRequestOptions = new EscherRequestOptions(dummyServiceHost);
 
-      expect(escherRequestOptions.getHost()).to.eql(dummyServiceHost);
+      expect(escherRequestOptions.getHost()).to.eq(dummyServiceHost);
       expect(escherRequestOptions.toHash()).to.eql({
         allowEmptyResponse: false,
         headers: [
@@ -45,7 +45,7 @@ describe('EscherRequestOptions', function() {
     it('creates an instance with specified options', function() {
       const escherRequestOptions = new EscherRequestOptions(dummyServiceHost, dummyServiceOptions);
 
-      expect(escherRequestOptions.getHost()).to.eql(dummyServiceHost);
+      expect(escherRequestOptions.getHost()).to.eq(dummyServiceHost);
       expect(escherRequestOptions.toHash()).to.eql({
         allowEmptyResponse: false,
         headers: [
@@ -66,14 +66,14 @@ describe('EscherRequestOptions', function() {
     it('creates an EscherRequestOptions instance', function() {
       const escherRequestOptions = EscherRequestOptions.create(dummyServiceHost, dummyServiceOptions);
 
-      expect(escherRequestOptions.constructor.name).to.eql('EscherRequestOptions');
+      expect(escherRequestOptions.constructor.name).to.eq('EscherRequestOptions');
     });
 
     it('creates an instance with proper configuration', function() {
       const escherRequestOptions = EscherRequestOptions.create(dummyServiceHost, dummyServiceOptions);
 
-      expect(escherRequestOptions.getHost()).to.eql(dummyServiceHost);
-      expect(escherRequestOptions.getPort()).to.eql(dummyServiceOptions.port);
+      expect(escherRequestOptions.getHost()).to.eq(dummyServiceHost);
+      expect(escherRequestOptions.getPort()).to.eq(dummyServiceOptions.port);
     });
 
   });
@@ -84,7 +84,7 @@ describe('EscherRequestOptions', function() {
       const escherRequestOptions = EscherRequestOptions.create(dummyServiceHost, dummyServiceOptions);
       escherRequestOptions.setHost('example.com');
 
-      expect(escherRequestOptions.getHost()).to.eql('example.com');
+      expect(escherRequestOptions.getHost()).to.eq('example.com');
     });
 
   });
@@ -96,8 +96,8 @@ describe('EscherRequestOptions', function() {
       const escherRequestOptions = EscherRequestOptions.create(dummyServiceHost, dummyServiceOptions);
       escherRequestOptions.setToSecure();
 
-      expect(escherRequestOptions.getPort()).to.eql(443);
-      expect(escherRequestOptions.getSecure()).to.eql(true);
+      expect(escherRequestOptions.getPort()).to.eq(443);
+      expect(escherRequestOptions.getSecure()).to.eq(true);
     });
 
     it('with port sets the port to the defined and secure to true', function() {
@@ -105,8 +105,8 @@ describe('EscherRequestOptions', function() {
       const escherRequestOptions = EscherRequestOptions.create(dummyServiceHost, dummyServiceOptions);
       escherRequestOptions.setToSecure(666);
 
-      expect(escherRequestOptions.getPort()).to.eql(666);
-      expect(escherRequestOptions.getSecure()).to.eql(true);
+      expect(escherRequestOptions.getPort()).to.eq(666);
+      expect(escherRequestOptions.getSecure()).to.eq(true);
     });
 
   });
@@ -117,8 +117,8 @@ describe('EscherRequestOptions', function() {
       const escherRequestOptions = EscherRequestOptions.create(dummyServiceHost, dummyServiceOptions);
       escherRequestOptions.setToUnsecure();
 
-      expect(escherRequestOptions.getPort()).to.eql(80);
-      expect(escherRequestOptions.getSecure()).to.eql(false);
+      expect(escherRequestOptions.getPort()).to.eq(80);
+      expect(escherRequestOptions.getSecure()).to.eq(false);
     });
 
     it('with port sets the port to the defined and secure to false', function() {
@@ -126,8 +126,8 @@ describe('EscherRequestOptions', function() {
       const escherRequestOptions = EscherRequestOptions.create(dummyServiceHost, dummyServiceOptions);
       escherRequestOptions.setToUnsecure(666);
 
-      expect(escherRequestOptions.getPort()).to.eql(666);
-      expect(escherRequestOptions.getSecure()).to.eql(false);
+      expect(escherRequestOptions.getPort()).to.eq(666);
+      expect(escherRequestOptions.getSecure()).to.eq(false);
     });
 
   });
@@ -138,7 +138,7 @@ describe('EscherRequestOptions', function() {
       const escherRequestOptions = EscherRequestOptions.create(dummyServiceHost, dummyServiceOptions);
       escherRequestOptions.setSecure(false);
 
-      expect(escherRequestOptions.getSecure()).to.eql(false);
+      expect(escherRequestOptions.getSecure()).to.eq(false);
     });
 
   });
@@ -149,7 +149,7 @@ describe('EscherRequestOptions', function() {
       const escherRequestOptions = EscherRequestOptions.create(dummyServiceHost, dummyServiceOptions);
       escherRequestOptions.setPort(666);
 
-      expect(escherRequestOptions.getPort()).to.eql(666);
+      expect(escherRequestOptions.getPort()).to.eq(666);
     });
 
   });
@@ -162,13 +162,13 @@ describe('EscherRequestOptions', function() {
 
       escherRequestOptions.setHeader(dummyHeader);
 
-      expect(escherRequestOptions.getHeader('header-name')).to.eql('header-value');
+      expect(escherRequestOptions.getHeader('header-name')).to.eq('header-value');
     });
 
     it('should add default content type', function() {
       const escherRequestOptions = new EscherRequestOptions(dummyServiceHost, dummyServiceOptions);
 
-      expect(escherRequestOptions.getHeader('content-type')).to.eql('application/json');
+      expect(escherRequestOptions.getHeader('content-type')).to.eq('application/json');
     });
 
     it('should not duplicate headers with same name', function() {
@@ -177,10 +177,10 @@ describe('EscherRequestOptions', function() {
 
       escherRequestOptions.setHeader(expectedContentTypeHeader);
 
-      expect(escherRequestOptions.getHeader('content-type')).to.eql('text/csv');
+      expect(escherRequestOptions.getHeader('content-type')).to.eq('text/csv');
     });
 
-    it('#getHeader should responds with null if header is missing', function() {
+    it('#getHeader should respond with null if header is missing', function() {
       const escherRequestOptions = new EscherRequestOptions(dummyServiceHost, dummyServiceOptions);
 
       expect(escherRequestOptions.getHeader('unknown')).to.eq(null);
@@ -198,41 +198,41 @@ describe('EscherRequestOptions', function() {
 
   });
 
-  describe('allowEmptyResponse', function() {
+  describe('allowEmptyResponse handling', function() {
     it('should be set to false by default', function() {
       const escherRequestOptions = new EscherRequestOptions(dummyServiceHost, dummyServiceOptions);
 
-      expect(escherRequestOptions.getAllowEmptyResponse()).to.eql(false);
+      expect(escherRequestOptions.getAllowEmptyResponse()).to.eq(false);
     });
 
     it('should be set to the value provided in config', function() {
       dummyServiceOptions.allowEmptyResponse = true;
       const escherRequestOptions = new EscherRequestOptions(dummyServiceHost, dummyServiceOptions);
 
-      expect(escherRequestOptions.getAllowEmptyResponse()).to.eql(true);
+      expect(escherRequestOptions.getAllowEmptyResponse()).to.eq(true);
     });
   });
 
-  describe('timeout', function() {
+  describe('timeout handling', function() {
     it('should return a default value if options.timeout is not defined', function() {
       delete dummyServiceOptions.timeout;
       const escherRequestOptions = new EscherRequestOptions(dummyServiceHost, dummyServiceOptions);
 
-      expect(escherRequestOptions.getTimeout()).to.be.eql(15000);
+      expect(escherRequestOptions.getTimeout()).to.be.eq(15000);
     });
 
     it('should return the timeout passed in the constructor', function() {
       dummyServiceOptions.timeout = 0;
       const escherRequestOptions = new EscherRequestOptions(dummyServiceHost, dummyServiceOptions);
 
-      expect(escherRequestOptions.getTimeout()).to.be.eql(0);
+      expect(escherRequestOptions.getTimeout()).to.be.eq(0);
     });
 
     it('should return the timeout set by setTimeout', function() {
       const escherRequestOptions = new EscherRequestOptions(dummyServiceHost, dummyServiceOptions);
       escherRequestOptions.setTimeout(60000);
 
-      expect(escherRequestOptions.getTimeout()).to.be.eql(60000);
+      expect(escherRequestOptions.getTimeout()).to.be.eq(60000);
     });
 
   });
@@ -242,7 +242,7 @@ describe('EscherRequestOptions', function() {
       const escherRequestOptions = new EscherRequestOptions(dummyServiceHost, dummyServiceOptions);
       escherRequestOptions.setCredentialScope('eu/test/ems_request');
 
-      expect(escherRequestOptions.getCredentialScope()).to.be.eql('eu/test/ems_request');
+      expect(escherRequestOptions.getCredentialScope()).to.be.eq('eu/test/ems_request');
     });
   });
 
